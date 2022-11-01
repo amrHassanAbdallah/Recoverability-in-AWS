@@ -1,0 +1,160 @@
+➜  Downloads chmod 400 hamda.pem
+➜  Downloads ssh -i "hamda.pem" ec2-user@ec2-44-203-114-209.compute-1.amazonaws.com
+The authenticity of host 'ec2-44-203-114-209.compute-1.amazonaws.com (44.203.114.209)' can't be established.
+ED25519 key fingerprint is SHA256:Tr2HhM/0HVoApIGD4YVSh+3s29kr/NyJ6AOGpBx6IQU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ec2-44-203-114-209.compute-1.amazonaws.com' (ED25519) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+13 package(s) needed for security, out of 16 available
+Run "sudo yum update" to apply all updates.
+-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory
+[ec2-user@ip-10-1-10-150 ~]$ mysql
+-bash: mysql: command not found
+[ec2-user@ip-10-1-10-150 ~]$ apt-get install mysql-client
+-bash: apt-get: command not found
+[ec2-user@ip-10-1-10-150 ~]$ apt-get update
+-bash: apt-get: command not found
+[ec2-user@ip-10-1-10-150 ~]$ sudo apt-get update
+sudo: apt-get: command not found
+[ec2-user@ip-10-1-10-150 ~]$ sudo apt update
+sudo: apt: command not found
+[ec2-user@ip-10-1-10-150 ~]$ sudo apt-get update
+sudo: apt-get: command not found
+[ec2-user@ip-10-1-10-150 ~]$ sudo yum install mysql
+Failed to set locale, defaulting to C
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                                                         | 3.7 kB  00:00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb.x86_64 1:5.5.68-1.amzn2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+==========================================================================================================================================================================
+ Package                               Arch                                 Version                                        Repository                                Size
+==========================================================================================================================================================================
+Installing:
+ mariadb                               x86_64                               1:5.5.68-1.amzn2                               amzn2-core                               8.8 M
+
+Transaction Summary
+==========================================================================================================================================================================
+Install  1 Package
+
+Total download size: 8.8 M
+Installed size: 49 M
+Is this ok [y/d/N]: y
+Downloading packages:
+mariadb-5.5.68-1.amzn2.x86_64.rpm                                                                                                                  | 8.8 MB  00:00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:mariadb-5.5.68-1.amzn2.x86_64                                                                                                                        1/1
+  Verifying  : 1:mariadb-5.5.68-1.amzn2.x86_64                                                                                                                        1/1
+
+Installed:
+  mariadb.x86_64 1:5.5.68-1.amzn2
+
+Complete!
+[ec2-user@ip-10-1-10-150 ~]$ mysql
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2)
+[ec2-user@ip-10-1-10-150 ~]$ mysql -h udacity.cpyv8sbkgnc6.us-east-1.rds.amazonaws.com -P 3306 -u mymasteruser -p
+Enter password:
+ERROR 2059 (HY000): Authentication plugin 'sha256_password' cannot be loaded: /usr/lib64/mysql/plugin/sha256_password.so: cannot open shared object file: No such file or directory
+[ec2-user@ip-10-1-10-150 ~]$
+[ec2-user@ip-10-1-10-150 ~]$ mysql -h udacity.cpyv8sbkgnc6.us-east-1.rds.amazonaws.com -P 3306 -u admin -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 43
+Server version: 8.0.28 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> create table hamda
+    -> ;
+ERROR 1046 (3D000): No database selected
+MySQL [(none)]> create table hamda;
+ERROR 1046 (3D000): No database selected
+MySQL [(none)]> database list;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database list' at line 1
+MySQL [(none)]> select * database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+MySQL [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+MySQL [(none)]> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [mysql]> create table hamda;
+ERROR 1044 (42000): Access denied for user 'admin'@'%' to database 'mysql'
+MySQL [mysql]> use default;
+ERROR 1049 (42000): Unknown database 'default'
+MySQL [mysql]> create database test;
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [mysql]> ls
+    -> \
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ls' at line 1
+MySQL [mysql]> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+MySQL [mysql]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+MySQL [mysql]> use test;
+Database changed
+MySQL [test]> create table hamda;
+ERROR 4028 (HY000): A table must have at least one visible column.
+MySQL [test]> CREATE TABLE Persons (
+    ->     PersonID int,
+    ->     LastName varchar(255),
+    ->     FirstName varchar(255),
+    ->     Address varchar(255),
+    ->     City varchar(255)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+MySQL [test]> INSERT INTO table_name (column1, column2, column3, ...)
+    -> VALUES (value1, value2, value3, ...);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '...)
+VALUES (value1, value2, value3, ...)' at line 1
+MySQL [test]> INSERT INTO Persons (FirstName, LastName) VALUES ("Amr", "H");
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [test]> select * from Persons;
++----------+----------+-----------+---------+------+
+| PersonID | LastName | FirstName | Address | City |
++----------+----------+-----------+---------+------+
+|     NULL | H        | Amr       | NULL    | NULL |
++----------+----------+-----------+---------+------+
+1 row in set (0.00 sec)
+
+MySQL [test]>
